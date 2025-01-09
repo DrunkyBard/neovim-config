@@ -44,6 +44,16 @@ plugin.config = function(buf, opts)
   local telescope = require('telescope')
   telescope.setup({
     defaults = {
+      vimgrep_arguments = {
+        "rg",
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        -- "--smart-case",
+        "--ignore-case"
+      },
       mappings = {
         n = {
           ["<M-t>"] = open_in_trouble,
