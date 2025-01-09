@@ -53,6 +53,17 @@ plugin.config = function(buf, opts)
         },
       },
     },
+    pickers = {
+      find_files = {
+        hidden = true
+      },
+      live_grep = {
+        additional_args = { '--hidden' }
+      },
+      grep_string = {
+        additional_args = { '--hidden' }
+      }
+    }
   })
   telescope.load_extension('dap')
 end
