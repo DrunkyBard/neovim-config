@@ -1,1 +1,4 @@
 https://github.com/puremourning/vimspector
+https://github.com/Shatur/neovim-tasks?tab=readme-ov-file
+https://github.com/Civitasv/cmake-tools.nvim?tab=readme-ov-file
+nvim config: https://github.com/meuter/nvim

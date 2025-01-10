@@ -179,13 +179,31 @@ local M = {
 
       require('mason').setup({})
       require('mason-lspconfig').setup({
-        ensure_installed = { 'lua_ls', 'clangd', 'vimls' },
+        ensure_installed = { 'lua_ls', 'clangd', 'vimls', 'neocmake' },
         automatic_installation = false,
         handlers = {
           -- this first function is the "default handler"
           -- it applies to every language server without a "custom handler"
           function(server_name)
             require('lspconfig')[server_name].setup({})
+          end,
+          neocmake = function()
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+            capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+            require('lspconfig').neocmake.setup {
+              capabilities = capabilities,
+              cmd = {
+                "neocmakelsp",
+                "--stdio"
+              },
+              filetypes = { 'cmake' },
+              root_dir = function(fname)
+                local util = require('lspconfig.util')
+                return util.root_pattern(unpack({ '.git', 'build', 'cmake' }))(fname)
+              end,
+              single_file_support = true,
+            }
           end,
           clangd = function()
             require('lspconfig').clangd.setup({
