@@ -200,6 +200,7 @@ local M = {
               filetypes = { 'cmake' },
               root_dir = function(fname)
                 local util = require('lspconfig.util')
+
                 return util.root_pattern(unpack({ '.git', 'build', 'cmake' }))(fname)
               end,
               single_file_support = true,
