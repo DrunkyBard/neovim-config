@@ -4,7 +4,43 @@ local plugin = {
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-telescope/telescope-dap.nvim',
-    'nvim-treesitter/nvim-treesitter'
+    'nvim-treesitter/nvim-treesitter',
+    {
+      'folke/trouble.nvim',
+      cmd = "Trouble",
+      keys = {
+        {
+          "<leader>xx",
+          "<cmd>Trouble diagnostics toggle<cr>",
+          desc = "Diagnostics (Trouble)",
+        },
+        {
+          "<leader>xX",
+          "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+          desc = "Buffer Diagnostics (Trouble)",
+        },
+        {
+          "<leader>cs",
+          "<cmd>Trouble symbols toggle focus=false<cr>",
+          desc = "Symbols (Trouble)",
+        },
+        {
+          "<leader>cl",
+          "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+          desc = "LSP Definitions / references / ... (Trouble)",
+        },
+        {
+          "<leader>xL",
+          "<cmd>Trouble loclist toggle<cr>",
+          desc = "Location List (Trouble)",
+        },
+        {
+          "<leader>xQ",
+          "<cmd>Trouble qflist toggle<cr>",
+          desc = "Quickfix List (Trouble)",
+        },
+      },
+    },
   }
 }
 
@@ -26,20 +62,22 @@ plugin.config = function(buf, opts)
   vim.keymap.set("n", "<leader>dv", ":Telescope dap variables<cr>", { desc = "DAP variables" })
   vim.keymap.set("n", "<leader>df", ":Telescope dap frames<cr>", { desc = "DAP frames" })
 
+  local trouble = require('trouble')
+  trouble.setup()
+
   local open_in_trouble = require("trouble.sources.telescope").open
-  local action_state = require('telescope.actions.state')
-  local actions = require("telescope.actions")
-  local trouble = require("trouble")
-  local transform_mod = require("telescope.actions.mt").transform_mod
-  local custom_actions = transform_mod({
-    open_trouble_qflist = function(buf)
-      trouble.focus("quickfix")
-    end,
-  })
-  local deleteBuf = function(buffer)
-    local selection = action_state.get_current_selection()
-    vim.api.nvim_buf_delete(selection.bufnr, { force = false })
-  end
+  -- local action_state = require('telescope.actions.state')
+  -- local actions = require("telescope.actions")
+  -- local transform_mod = require("telescope.actions.mt").transform_mod
+  -- local custom_actions = transform_mod({
+  --   open_trouble_qflist = function(buf)
+  --     trouble.focus("quickfix")
+  --   end,
+  -- })
+  -- local deleteBuf = function(buffer)
+  --   local selection = action_state.get_current_selection()
+  --   vim.api.nvim_buf_delete(selection.bufnr, { force = false })
+  -- end
 
   local telescope = require('telescope')
   telescope.setup({
@@ -59,8 +97,12 @@ plugin.config = function(buf, opts)
           ["<M-t>"] = open_in_trouble,
           ["s"] = "select_vertical",
           ["S"] = "select_horizontal",
+          ["<C-h>"] = open_in_trouble,
           -- ["d"] = deleteBuf,
         },
+        i = {
+          ["<C-h>"] = open_in_trouble,
+        }
       },
     },
     pickers = {
