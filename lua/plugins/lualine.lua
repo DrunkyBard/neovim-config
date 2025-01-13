@@ -24,14 +24,15 @@ local plugin = {
       },
       sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_b = { 'branch', 'diff', },
         lualine_c = {
+          'filetype',
           {
             'filename',
             path = 1
           }
         },
-        lualine_x = { 'encoding', 'filetype' },
+        lualine_x = { 'diagnostics', 'encoding' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' }
       },
@@ -44,7 +45,7 @@ local plugin = {
             path = 1
           }
         },
-        lualine_x = { 'location' },
+        lualine_x = { 'diagnostics', 'location' },
         lualine_y = {},
         lualine_z = {}
       },
