@@ -80,7 +80,6 @@ local tryCloseBuffer = function(buf)
     -- vim.api.nvim_create_buf(true, true)
     -- vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
 
-    require('neo-tree.utils').brace_expand('dfg/dfgdf/fg.txt')
     -- string.match('sdf.txt', "(.*[/\\])")
     if input == 'y' then
       if isTempBuffer(buf) then

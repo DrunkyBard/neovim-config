@@ -1,4 +1,9 @@
 local vimrc = vim.fn.stdpath("config") .. "/vimrc.vim"
+
+-- disabling netrw is advised by nvim-tree plugin (:h nvim-tree-netrw)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.cmd.source(vimrc)
 vim.hl = vim.highlight -- https://github.com/neovim/neovim/issues/31675
 
