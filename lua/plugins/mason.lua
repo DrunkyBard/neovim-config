@@ -217,9 +217,20 @@ local M = {
                 fallbackFlags = { '-std=c++17' },
               },
               on_attach = function(client, bufnr)
-                require("clangd_extensions.inlay_hints").setup_autocmd()
+                local clang_inlay_hints = require("clangd_extensions.inlay_hints")
+                local clang_extensions = require("clangd_extensions")
+
+                -- clang_inlay_hints.setup_autocmd()
+
+                clang_extensions.setup({
+                  inlay_hints = {
+                    inline = false,
+                    show_parameter_hints = false,
+                  },
+                })
                 -- require("clangd_extensions.inlay_hints").set_inlay_hints()
 
+                vim.keymap.set('n', '<leader>ti', clang_inlay_hints.toggle_inlay_hints, { desc = 'Toggle inlay hints' })
                 vim.keymap.set('n', 'gh', ':ClangdTypeHierarchy<cr>', { desc = 'Type hierarchy' })
                 vim.keymap.set('n', 'g.', ':ClangdSwitchSourceHeader<cr>', { desc = 'Switch source/header' })
               end
