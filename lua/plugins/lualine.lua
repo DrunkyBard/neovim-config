@@ -24,7 +24,7 @@ local plugin = {
       },
       sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diff', },
+        lualine_b = { 'branch', },
         lualine_c = {
           'filetype',
           {

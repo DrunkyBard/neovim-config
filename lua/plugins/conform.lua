@@ -7,6 +7,9 @@ local plugin = {
         -- csharp = { "csharpier" },
         -- c_sharp = { "csharpier" },
         cs = { "csharpier" },
+        cpp = { "clang-format" },
+        hpp = { "clang-format" },
+        h = { "clang-format" },
       }
     })
 
