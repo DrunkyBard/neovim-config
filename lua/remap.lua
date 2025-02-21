@@ -4,7 +4,9 @@ vim.g.mapleader = " "
 vim.keymap.set('t', '<esc>', [[<C-\><C-n>]])
 
 vim.keymap.set('n', '<C-j>', 'j<C-e>', { desc = 'Scroll down' })
-vim.keymap.set('n', '<C-k>', 'k<C-y>', { desc = 'Clear selection' })
+vim.keymap.set('n', '<C-down>', 'j<C-e>', { desc = 'Scroll down' })
+vim.keymap.set('n', '<C-k>', 'k<C-y>', { desc = 'Scroll up' })
+vim.keymap.set('n', '<C-up>', 'k<C-y>', { desc = 'Scroll up' })
 
 vim.keymap.set('n', '<C-S-M-Left>', ':vertical resize -2<cr>', { desc = 'Vertical left border resize' })
 vim.keymap.set('n', '<C-S-M-Right>', ':vertical resize +2<cr>', { desc = 'Vertical right border resize' })
@@ -31,6 +33,8 @@ vim.keymap.set('n', '<leader>om', ':Mason<cr>', { desc = 'Mason' })
 vim.keymap.set('n', '<leader>bn', ':ene <bar> startinsert<cr>', { desc = 'New buffer' })
 
 vim.keymap.set('n', '<leader><leader>s', 'viws', { desc = 'Replace a word under cursor' })
+vim.keymap.set('i', '<C-q>', '<Esc>', { desc = 'Switch to normal mode' })
+vim.keymap.set('v', '<C-q>', '<Esc>', { desc = 'Switch to normal mode' })
 
 local isTempBuffer = function(buf)
   local bufName = vim.api.nvim_buf_get_name(buf)
