@@ -179,7 +179,7 @@ local M = {
 
       require('mason').setup({})
       require('mason-lspconfig').setup({
-        ensure_installed = { 'lua_ls', 'clangd', 'vimls', 'neocmake' },
+        ensure_installed = { 'lua_ls', 'clangd', 'vimls', 'neocmake', 'ts_ls' },
         automatic_installation = false,
         handlers = {
           -- this first function is the "default handler"
@@ -205,6 +205,10 @@ local M = {
               end,
               single_file_support = true,
             }
+          end,
+          ts_ls = function()
+            require('lspconfig').ts_ls.setup({
+            })
           end,
           clangd = function()
             require('lspconfig').clangd.setup({
