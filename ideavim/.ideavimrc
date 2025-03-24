@@ -1,0 +1,105 @@
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯБЮЖЭХЪ;ABCDEFGHIJKLMNOPQRSTUVWXYZ<>:\"{},фисвуапршолдьтщзйкыегмцчнябюж.эхъ;abcdefghijklmnopqrstuvwxyz\\,.\;/\'[]
+set scrolloff=10
+set number
+set relativenumber
+set tabstop=2 softtabstop=2
+set shiftwidth=2
+set expandtab
+set smartindent
+set nowrap
+set hlsearch
+
+set completeopt=noinsert
+
+set which-key
+set notimeout
+
+let mapleader = " "
+set scrolloff=5
+
+" Do incremental searching.
+set incsearch
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+sethandler <C-c> a:vim
+sethandler <C-v> a:ide
+sethandler <C-r> a:vim
+sethandler <C-j> a:vim
+sethandler <C-k> a:vim
+sethandler <C-u> a:vim
+sethandler <C-o> a:vim
+sethandler <C-i> a:vim
+
+"Switch terminal to normal mode
+tnoremap <esc> [[<C-\><C-n>]]
+
+" Scroll up/down
+nnoremap <C-j> j<C-e> 
+nnoremap <C-down> j<C-e>
+nnoremap <C-k> k<C-y>
+nnoremap <C-up> k<C-y>
+
+"Border resize
+nnoremap <C-S-M-Left> :vertical resize -2<cr>
+nnoremap <C-S-M-Right> :vertical resize +2<cr>
+nnoremap <C-S-M-Up> :resize -2<cr>
+nnoremap <C-S-M-Down> :resize +2<cr>
+
+"Split selection
+nnoremap <C-M-Left> <C-w>h
+nnoremap <C-M-h> <C-w>h
+nnoremap <C-M-Right> <C-w>l
+nnoremap <C-M-l> <C-w>l
+nnoremap <C-M-Down> <C-w>j
+nnoremap <C-M-j> <C-w>j
+nnoremap <C-M-Up> <C-w>k
+nnoremap <C-M-k> <C-w>k
+
+"Replace a word under cursor
+nnoremap <leader><leader>s viws
+"Yank a word to the clipboard
+nnoremap <leader><leader>y viw"+y
+
+"Switch to normal mode
+inoremap <C-c> <esc>
+vnoremap <C-c> <esc>
+
+"Vertical/horizontal splits
+nnoremap <C-w>s :vsplit<cr>
+nnoremap <C-w><S-s> :split<cr>
+
+"Move selection up/down
+vnoremap <S-k> :m '>-2<cr>gv=gv
+vnoremap <S-j> :m '>+1<cr>gv=gv
+
+"Clear selection
+nnoremap <C-h> :noh<cr>
+"Yank to clipboard
+vnoremap <leader>y "+y
+
+nnoremap [[ :action MethodUp<cr>
+nnoremap ]] :action MethodDown<cr>
+
+nnoremap <C-r><C-r> :action Refactorings.QuickListPopupAction<cr>
+nnoremap <F3> :action ReformatCode<cr>
+vnoremap <F3> :action ReformatCode<cr>
+nnoremap ge :action GotoNextError<cr>
+nnoremap gE :action GotoPreviousError<cr>
+nnoremap gi :action GotoImplementation<cr>
+nnoremap gd :action GotoDeclaration<cr>
+nnoremap gp :action GotoSuperMethod<cr>
+nnoremap zc :action CollapseRegion<cr>
+nnoremap zo :action ExpandRegion<cr>
+nnoremap <leader>zc :action CollapseAllRegions<cr>
+nnoremap <leader>zo :action ExpandAllRegions<cr>
+nnoremap gu :action ShowUsages<cr>
