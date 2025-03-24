@@ -51,10 +51,10 @@ nnoremap <C-k> k<C-y>
 nnoremap <C-up> k<C-y>
 
 "Border resize
-nnoremap <C-S-M-Left> :vertical resize -2<cr>
-nnoremap <C-S-M-Right> :vertical resize +2<cr>
-nnoremap <C-S-M-Up> :resize -2<cr>
-nnoremap <C-S-M-Down> :resize +2<cr>
+"nnoremap <C-S-M-Left> :vertical resize -2<cr>
+"nnoremap <C-S-M-Right> :vertical resize +2<cr>
+"nnoremap <C-S-M-Up> :resize -2<cr>
+"nnoremap <C-S-M-Down> :resize +2<cr>
 
 "Split selection
 nnoremap <C-M-Left> <C-w>h
@@ -91,9 +91,9 @@ vnoremap <leader>y "+y
 nnoremap [[ :action MethodUp<cr>
 nnoremap ]] :action MethodDown<cr>
 
-nnoremap <C-r><C-r> :action Refactorings.QuickListPopupAction<cr>
 nnoremap <F3> :action ReformatCode<cr>
 vnoremap <F3> :action ReformatCode<cr>
+nnoremap gr :action Refactorings.QuickListPopupAction<cr>
 nnoremap ge :action GotoNextError<cr>
 nnoremap gE :action GotoPreviousError<cr>
 nnoremap gi :action GotoImplementation<cr>
@@ -104,3 +104,10 @@ nnoremap zo :action ExpandRegion<cr>
 nnoremap <leader>zc :action CollapseAllRegions<cr>
 nnoremap <leader>zo :action ExpandAllRegions<cr>
 nnoremap gu :action ShowUsages<cr>
+
+"Split resize
+nnoremap <C-w>\| :action MaximizeEditorInSplit<cr>
+nnoremap <C-S-M-Left> :action StretchSplitToLeft<cr>
+nnoremap <C-S-M-Right> :action StretchSplitToRight<cr>
+nnoremap <C-S-M-Up> :action StretchSplitToTop<cr>
+nnoremap <C-S-M-Down> :action StretchSplitToBottom<cr>
