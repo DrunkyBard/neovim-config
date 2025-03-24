@@ -40,6 +40,7 @@ sethandler <C-u> a:vim
 sethandler <C-o> a:vim
 sethandler <C-i> a:vim
 sethandler <C-f> n:ide
+sethandler <C-a> i:vim
 
 "Switch terminal to normal mode
 tnoremap <esc> [[<C-\><C-n>]]
@@ -104,6 +105,7 @@ nnoremap zo :action ExpandRegion<cr>
 nnoremap <leader>zc :action CollapseAllRegions<cr>
 nnoremap <leader>zo :action ExpandAllRegions<cr>
 nnoremap gu :action ShowUsages<cr>
+inoremap <C-a> :action CodeCompletion<cr>
 
 "Split resize
 nnoremap <C-w>\| :action MaximizeEditorInSplit<cr>
