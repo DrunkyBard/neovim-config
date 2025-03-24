@@ -39,6 +39,7 @@ sethandler <C-k> a:vim
 sethandler <C-u> a:vim
 sethandler <C-o> a:vim
 sethandler <C-i> a:vim
+sethandler <C-f> n:ide
 
 "Switch terminal to normal mode
 tnoremap <esc> [[<C-\><C-n>]]
