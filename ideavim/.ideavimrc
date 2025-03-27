@@ -116,3 +116,7 @@ nnoremap <C-S-M-Left> :action StretchSplitToLeft<cr>
 nnoremap <C-S-M-Right> :action StretchSplitToRight<cr>
 nnoremap <C-S-M-Up> :action StretchSplitToTop<cr>
 nnoremap <C-S-M-Down> :action StretchSplitToBottom<cr>
+
+"Go to line begin/end
+nnoremap <leader>lb ^
+nnoremap <leader>le $
