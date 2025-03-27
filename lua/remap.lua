@@ -37,6 +37,9 @@ vim.keymap.set('n', '<leader><leader>y', 'viw"+y', { desc = 'Yank a word to the 
 vim.keymap.set('i', '<C-c>', '<Esc>', { desc = 'Switch to normal mode' })
 vim.keymap.set('v', '<C-c>', '<Esc>', { desc = 'Switch to normal mode' })
 
+vim.keymap.set('n', '<leader>lb', '^', { desc = 'Go to line start' })
+vim.keymap.set('n', '<leader>le', '$', { desc = 'Go to line end' })
+
 local isTempBuffer = function(buf)
   local bufName = vim.api.nvim_buf_get_name(buf)
 
