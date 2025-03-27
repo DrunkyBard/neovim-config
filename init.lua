@@ -1,3 +1,5 @@
+-- XDG_CONFIG_HOME XDG_DATA_HOME XDG_STATE_HOME env vars to override nvim location
+
 local vimrc = vim.fn.stdpath("config") .. "/vimrc.vim"
 
 -- disabling netrw is advised by nvim-tree plugin (:h nvim-tree-netrw)
