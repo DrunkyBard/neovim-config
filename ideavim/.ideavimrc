@@ -109,6 +109,8 @@ nnoremap <leader>zo :action ExpandAllRegions<cr>
 nnoremap gu :action ShowUsages<cr>
 inoremap <C-a> :action CodeCompletion<cr>
 nnoremap gs :action ParameterInfo<cr>
+nnoremap <C-o> :action Back<cr>
+nnoremap <C-i> :action Forward<cr>
 
 "Split resize
 nnoremap <C-w>\| :action MaximizeEditorInSplit<cr>
