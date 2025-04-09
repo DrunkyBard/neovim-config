@@ -73,6 +73,8 @@ nnoremap <C-M-k> <C-w>k
 nnoremap <leader><leader>s viws
 "Yank a word to the clipboard
 nnoremap <leader><leader>y viw"+y
+"Cut a word to the clipboard
+nnoremap <leader><leader>x viw"+yviwd
 
 "Switch to normal mode
 inoremap <C-c> <esc>
