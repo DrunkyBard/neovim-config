@@ -148,3 +148,4 @@ vim.keymap.set('n', '<C-F4>', tryCloseCurrentBuffer, { desc = 'Close current buf
 vim.keymap.set('n', '<C-w><S-x>', closeAllBuffers, { desc = 'Close all buffers' })
 vim.keymap.set('n', '<C-w>s', ':vsplit<cr>', { desc = 'Split vertically' })
 vim.keymap.set('n', '<C-w><S-s>', ':split<cr>', { desc = 'Split horizontally' })
+vim.keymap.set('n', '<C-w>m', '<C-w>|<C-w>_', { desc = 'Maximize current buffer' })
