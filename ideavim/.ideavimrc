@@ -124,3 +124,5 @@ nnoremap <C-S-M-Down> :action StretchSplitToBottom<cr>
 "Go to line begin/end
 nnoremap <leader>lb ^
 nnoremap <leader>le $
+vnoremap <leader>lb ^
+vnoremap <leader>le $
