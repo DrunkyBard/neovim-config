@@ -15,7 +15,6 @@ set which-key
 set notimeout
 
 let mapleader = " "
-set scrolloff=5
 
 " Do incremental searching.
 set incsearch
