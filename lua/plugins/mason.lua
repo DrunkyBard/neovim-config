@@ -179,7 +179,7 @@ local M = {
 
       require('mason').setup({})
       require('mason-lspconfig').setup({
-        ensure_installed = { 'lua_ls', 'clangd', 'vimls', 'neocmake', 'ts_ls' },
+        ensure_installed = { 'lua_ls', 'clangd', 'vimls', 'neocmake', 'ts_ls', 'zls' },
         automatic_installation = false,
         handlers = {
           -- this first function is the "default handler"
@@ -297,6 +297,15 @@ local M = {
                   nvim_settings
                 )
               end,
+            })
+          end,
+          zls = function()
+            vim.notify('zls setup', vim.log.levels.INFO)
+            require('lspconfig').zls.setup({
+              cmd = { 'zls' },
+              filetypes = { 'zig', 'zir' },
+              root_markers = { 'zls.json', 'build.zig', '.git' },
+              workspace_required = false
             })
           end
         }
