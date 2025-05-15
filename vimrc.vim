@@ -9,6 +9,7 @@ set smartindent
 set nowrap
 set hlsearch
 set guifont=Fira\ Code\ Retina:h11
+set ignorecase
 
 set completeopt=noinsert
 
