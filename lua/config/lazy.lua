@@ -21,7 +21,9 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
--- Setup lazy.nvim
+vim.api.nvim_set_hl(0, 'LazyBackdrop', { link = 'Normal' })
+vim.api.nvim_set_hl(0, 'LazyNormal', { link = 'Normal' })
+
 require("lazy").setup({
   spec = {
     -- import your plugins
@@ -32,4 +34,7 @@ require("lazy").setup({
   install = { colorscheme = { "gruvbox-material" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
+  ui = {
+    border = 'double'
+  }
 })
