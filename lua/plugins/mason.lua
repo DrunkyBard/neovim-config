@@ -205,7 +205,7 @@ local M = {
       -- })
 
       require('mason-lspconfig').setup({
-        ensure_installed = { 'lua_ls', 'clangd', 'vimls', 'neocmake', 'ts_ls', 'zls' },
+        ensure_installed = { 'lua_ls', 'clangd', 'vimls', 'neocmake', 'ts_ls', 'zls', 'ansiblels' },
         automatic_installation = false,
         handlers = {
           -- this first function is the "default handler"
@@ -326,12 +326,38 @@ local M = {
             })
           end,
           zls = function()
-            vim.notify('zls setup', vim.log.levels.INFO)
             require('lspconfig').zls.setup({
               cmd = { 'zls' },
               filetypes = { 'zig', 'zir' },
               root_markers = { 'zls.json', 'build.zig', '.git' },
               workspace_required = false
+            })
+          end,
+          ansiblels = function()
+            require('lspconfig').ansiblels.setup({
+              cmd = { "ansible-language-server", "--stdio" },
+              filetypes = { 'yaml.ansible' },
+              root_markers = { "ansible.cfg", ".ansible-lint" },
+              settings = {
+                ansible = {
+                  ansible = {
+                    path = "ansible"
+                  },
+                  executionEnvironment = {
+                    enabled = false
+                  },
+                  python = {
+                    interpreterPath = "python"
+                  },
+                  validation = {
+                    enabled = true,
+                    lint = {
+                      enabled = true,
+                      path = "ansible-lint"
+                    }
+                  }
+                }
+              }
             })
           end
         }
