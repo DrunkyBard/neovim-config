@@ -72,7 +72,7 @@ return {
         vim.keymap.set("n", "S", api.node.open.horizontal, opts("Open horizontal"))
         vim.keymap.set("n", "<C-f>", api.tree.search_node, opts("Open horizontal"))
         vim.keymap.set("n", "h", api.tree.collapse_all, opts("Collapse All"))
-        vim.keymap.set("n", "<M-h>", change_root_to_global_cwd, opts("Set NVimTree to cwd"))
+        vim.keymap.set("n", "<C-M-h>", change_root_to_global_cwd, opts("Set NVimTree to cwd"))
         vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
       end
     })
