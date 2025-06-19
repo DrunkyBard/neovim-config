@@ -60,14 +60,14 @@ nnoremap <C-up> k<C-y>
 "nnoremap <C-S-M-Down> :resize +2<cr>
 
 "Split selection
-nnoremap <C-M-Left> <C-w>h
-nnoremap <C-M-h> <C-w>h
-nnoremap <C-M-Right> <C-w>l
-nnoremap <C-M-l> <C-w>l
-nnoremap <C-M-Down> <C-w>j
-nnoremap <C-M-j> <C-w>j
-nnoremap <C-M-Up> <C-w>k
-nnoremap <C-M-k> <C-w>k
+nnoremap <M-Left> <C-w>h
+nnoremap <M-h> <C-w>h
+nnoremap <M-Right> <C-w>l
+nnoremap <M-l> <C-w>l
+nnoremap <M-Down> <C-w>j
+nnoremap <M-j> <C-w>j
+nnoremap <M-Up> <C-w>k
+nnoremap <M-k> <C-w>k
 
 "Replace a word under cursor
 nnoremap <leader><leader>s viws
