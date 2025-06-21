@@ -104,6 +104,14 @@ plugin.config = function(buf, opts)
           ["<C-h>"] = open_in_trouble,
         }
       },
+      layout_strategy = "horizontal",
+      layout_config = {
+          horizontal = {
+            width = { padding = 0 },
+            height = { padding = 0 },
+            preview_width = 0.6,
+          },
+      },
     },
     pickers = {
       find_files = {
