@@ -207,6 +207,7 @@ local M = {
       require('mason-lspconfig').setup({
         ensure_installed = { 'lua_ls', 'clangd', 'vimls', 'neocmake', 'ts_ls', 'zls', 'ansiblels' },
         automatic_installation = false,
+        automatic_enable = true,
         handlers = {
           -- this first function is the "default handler"
           -- it applies to every language server without a "custom handler"
@@ -326,11 +327,19 @@ local M = {
             })
           end,
           zls = function()
+            -- zls json schema: https://github.com/zigtools/zls/blob/master/schema.json
+            vim.g.zig_fmt_autosave = 0
+
             require('lspconfig').zls.setup({
               cmd = { 'zls' },
               filetypes = { 'zig', 'zir' },
               root_markers = { 'zls.json', 'build.zig', '.git' },
-              workspace_required = false
+              workspace_required = false,
+              settings = {
+                zls = {
+                  enable_autofix = true
+                }
+              }
             })
           end,
           ansiblels = function()
