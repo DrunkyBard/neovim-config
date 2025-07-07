@@ -10,6 +10,7 @@ set nowrap
 set hlsearch
 set guifont=Fira\ Code\ Retina:h11
 set ignorecase
+set mps+=<:>
 
 set completeopt=noinsert
 
