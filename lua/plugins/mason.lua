@@ -205,7 +205,7 @@ local M = {
       -- })
 
       require('mason-lspconfig').setup({
-        ensure_installed = { 'lua_ls', 'clangd', 'vimls', 'neocmake', 'ts_ls', 'zls', 'ansiblels' },
+        ensure_installed = { 'lua_ls', 'clangd', 'vimls', 'neocmake', 'ts_ls', 'zls', 'ansiblels', 'bashls' },
         automatic_installation = false,
         automatic_enable = true,
         handlers = {
@@ -367,6 +367,12 @@ local M = {
                   }
                 }
               }
+            })
+          end,
+          bashls = function()
+            require('lspconfig').bashls.setup({
+              cmd = { 'bash-language-server', 'start' },
+              filetypes = { 'bash', 'sh' }
             })
           end
         }
