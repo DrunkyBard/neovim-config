@@ -7,6 +7,10 @@ local M = {
       vim.api.nvim_set_hl(0, 'MasonNormal', { link = 'Normal' })
       vim.api.nvim_set_hl(0, 'MasonBackdrop', { link = 'Normal' })
       require('mason').setup({
+        registries = {
+          "github:mason-org/mason-registry",
+          "github:Crashdummyy/mason-registry",
+        },
         ui = {
           border = 'double'
         }
@@ -239,6 +243,7 @@ local M = {
           end,
           clangd = function()
             require('lspconfig').clangd.setup({
+              enabled = false,
               cmd = {
                 'clangd',
                 '--background-index',
@@ -337,7 +342,7 @@ local M = {
               workspace_required = false,
               settings = {
                 zls = {
-                  enable_autofix = true
+                  enable_autofix = true,
                 }
               }
             })
