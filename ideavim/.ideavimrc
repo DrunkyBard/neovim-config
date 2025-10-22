@@ -99,7 +99,8 @@ nnoremap ]] :action MethodDown<cr>
 
 nnoremap <F3> :action ReformatCode<cr>
 vnoremap <F3> :action ReformatCode<cr>
-nnoremap gr :action Refactorings.QuickListPopupAction<cr>
+nnoremap <leader>gr :action Refactorings.QuickListPopupAction<cr>
+nnoremap gr :action FindUsages<cr>
 nnoremap ge :action GotoNextError<cr>
 nnoremap gE :action GotoPreviousError<cr>
 nnoremap gi :action GotoImplementation<cr>
