@@ -13,6 +13,11 @@ vim.keymap.set('n', '<S-M-l>', ':vertical resize +2<cr>', { desc = 'Vertical rig
 vim.keymap.set('n', '<S-M-j>', ':resize -2<cr>', { desc = 'Vertical top border resize' })
 vim.keymap.set('n', '<S-M-k>', ':resize +2<cr>', { desc = 'Vertical bottom border resize' })
 
+vim.keymap.set('n', '<C-M-h>', '<C-w>H', { desc = 'Move split left' })
+vim.keymap.set('n', '<C-M-l>', '<C-w>L', { desc = 'Move split right' })
+vim.keymap.set('n', '<C-M-j>', '<C-w>J', { desc = 'Move split down' })
+vim.keymap.set('n', '<C-M-k>', '<C-w>K', { desc = 'Move split up' })
+
 vim.keymap.set('n', '<C-h>', '<cmd>noh<cr>', { desc = 'Clear selection' })
 vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Yank to clipboard' })
 vim.keymap.set('v', '<S-k>', ':m \'>-2<cr>gv=gv', { desc = 'Clear selection' })
