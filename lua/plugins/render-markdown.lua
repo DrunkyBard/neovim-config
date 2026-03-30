@@ -10,14 +10,34 @@ local plugin = {
 plugin.config = function()
   local md_plugin = require('render-markdown')
 
+  local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal" })
+  vim.api.nvim_set_hl(0, 'CustomMDH1', { bg = normal_hl.fg, fg = normal_hl.bg })
+
   md_plugin.setup({
     heading = {
       enabled        = true,
       border         = true,
       border_virtual = true,
-      width          = 'block',
+      width          = 'full',
       left_pad       = 2,
       right_pad      = 4,
+      backgrounds    = {
+        'CustomMDH1',
+        'RenderMarkdownCode',
+        'RenderMarkdownH2Bg',
+        'RenderMarkdownH3Bg',
+        'RenderMarkdownH4Bg',
+        'RenderMarkdownH5Bg',
+        'RenderMarkdownH6Bg',
+      },
+      foregrounds    = {
+        'CustomMDH1',
+        'RenderMarkdownH2',
+        'RenderMarkdownH3',
+        'RenderMarkdownH4',
+        'RenderMarkdownH5',
+        'RenderMarkdownH6',
+      },
     }
   })
 
@@ -25,7 +45,5 @@ plugin.config = function()
   vim.keymap.set('n', '<leader>mb', function() md_plugin.buf_toggle() end, { desc = 'Toggle buffer markdown render' })
   vim.keymap.set('n', '<leader>mp', function() md_plugin.preview() end, { desc = 'Markdown preview' })
 end
-
-vim.cmd("let t:splitType = 'horizontal'")
 
 return plugin
