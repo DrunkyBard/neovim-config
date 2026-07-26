@@ -1,6 +1,6 @@
 local M = {
   {
-    'williamboman/mason.nvim',
+    'mason-org/mason.nvim',
     lazy = false,
     opts = {},
     config = function()
@@ -72,7 +72,7 @@ local M = {
           autocomplete = false,
         },
         enabled = function()
-          return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+          return vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt"
               or require("cmp_dap").is_dap_buffer()
         end,
         sources = {
@@ -202,185 +202,162 @@ local M = {
         end,
       })
 
-      -- require('mason').setup({
-      --   ui = {
-      --     border = 'single'
-      --   }
-      -- })
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
+      vim.lsp.config('neocmake', {
+        capabilities = capabilities,
+        cmd = {
+          "neocmakelsp",
+          "--stdio"
+        },
+        filetypes = { 'cmake' },
+        root_dir = function(fname)
+          local util = require('lspconfig.util')
+
+          return util.root_pattern(unpack({ '.git', 'build', 'cmake' }))(fname)
+        end,
+        single_file_support = true,
+      })
+
+      vim.lsp.config('ts_ls', {})
+
+      vim.lsp.config('clangd', {
+        enabled = false,
+        cmd = {
+          'clangd',
+          '--background-index',
+          '--clang-tidy',
+        },
+        init_options = {
+          fallbackFlags = { '-std=c++17' },
+        },
+        on_attach = function(client, bufnr)
+          local toggleInlayHint = function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+          end
+
+          vim.keymap.set('n', '<leader>ti', toggleInlayHint, { desc = 'Toggle inlay hints' })
+          vim.keymap.set('n', 'gh', ':ClangdTypeHierarchy<cr>', { desc = 'Type hierarchy' })
+          vim.keymap.set('n', 'g.', ':ClangdSwitchSourceHeader<cr>', { desc = 'Switch source/header' })
+        end
+      })
+
+      vim.lsp.config('vimls', {})
+
+      vim.lsp.config('lua_ls', {
+        settings = {
+          Lua = {
+            telemetry = {
+              enable = false
+            },
+            format = {
+              enable = true,
+              defaultConfig = {
+                indent_style = "space",
+                indent_size = "2"
+              }
+            }
+          },
+        },
+        on_attach = function(client, bufnr)
+          --config.on_attach(client, bufnr)
+          client.server_capabilities.documentFormattingProvider = true
+          client.server_capabilities.documentRangeFormattingProvider = true
+        end,
+        on_init = function(client)
+          local join = vim.fs.joinpath
+
+          if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+
+            -- Don't do anything if there is project local config
+            if vim.uv.fs_stat(join(path, '.luarc.json'))
+                or vim.uv.fs_stat(join(path, '.luarc.jsonc'))
+            then
+              return
+            end
+          end
+
+          -- Apply neovim specific settings
+          local runtime_path = vim.split(package.path, ';')
+          table.insert(runtime_path, join('lua', '?.lua'))
+          table.insert(runtime_path, join('lua', '?', 'init.lua'))
+
+          local nvim_settings = {
+            runtime = {
+              -- Tell the language server which version of Lua you're using
+              version = 'LuaJIT',
+              path = runtime_path
+            },
+            diagnostics = {
+              -- Get the language server to recognize the `vim` global
+              globals = { 'vim' }
+            },
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                -- Make the server aware of Neovim runtime files
+                vim.env.VIMRUNTIME,
+                vim.fn.stdpath('config'),
+              },
+            },
+          }
+
+          client.config.settings.Lua = vim.tbl_deep_extend(
+            'force',
+            client.config.settings.Lua,
+            nvim_settings
+          )
+        end
+      })
+
+      vim.g.zig_fmt_autosave = 0
+      vim.lsp.config('zls', {
+        cmd = { 'zls' },
+        filetypes = { 'zig', 'zir' },
+        root_markers = { 'zls.json', 'build.zig', '.git' },
+        workspace_required = false,
+        settings = {
+          zls = {
+            enable_autofix = true,
+          }
+        }
+      })
+
+      vim.lsp.config('ansiblels', {
+        cmd = { "ansible-language-server", "--stdio" },
+        filetypes = { 'yaml.ansible' },
+        root_markers = { "ansible.cfg", ".ansible-lint" },
+        settings = {
+          ansible = {
+            ansible = {
+              path = "ansible"
+            },
+            executionEnvironment = {
+              enabled = false
+            },
+            python = {
+              interpreterPath = "python"
+            },
+            validation = {
+              enabled = true,
+              lint = {
+                enabled = true,
+                path = "ansible-lint"
+              }
+            }
+          }
+        }
+      })
+
+      vim.lsp.config('bashls', {
+        cmd = { 'bash-language-server', 'start' },
+        filetypes = { 'bash', 'sh' }
+      })
 
       require('mason-lspconfig').setup({
         ensure_installed = { 'lua_ls', 'clangd', 'vimls', 'neocmake', 'ts_ls', 'zls', 'ansiblels', 'bashls' },
-        automatic_installation = false,
         automatic_enable = true,
-        handlers = {
-          -- this first function is the "default handler"
-          -- it applies to every language server without a "custom handler"
-          function(server_name)
-            require('lspconfig')[server_name].setup({})
-          end,
-          neocmake = function()
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-            require('lspconfig').neocmake.setup {
-              capabilities = capabilities,
-              cmd = {
-                "neocmakelsp",
-                "--stdio"
-              },
-              filetypes = { 'cmake' },
-              root_dir = function(fname)
-                local util = require('lspconfig.util')
-
-                return util.root_pattern(unpack({ '.git', 'build', 'cmake' }))(fname)
-              end,
-              single_file_support = true,
-            }
-          end,
-          ts_ls = function()
-            require('lspconfig').ts_ls.setup({
-            })
-          end,
-          clangd = function()
-            require('lspconfig').clangd.setup({
-              enabled = false,
-              cmd = {
-                'clangd',
-                '--background-index',
-                '--clang-tidy',
-              },
-              init_options = {
-                fallbackFlags = { '-std=c++17' },
-              },
-              on_attach = function(client, bufnr)
-                local toggleInlayHint = function()
-                  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-                end
-
-                vim.keymap.set('n', '<leader>ti', toggleInlayHint, { desc = 'Toggle inlay hints' })
-                vim.keymap.set('n', 'gh', ':ClangdTypeHierarchy<cr>', { desc = 'Type hierarchy' })
-                vim.keymap.set('n', 'g.', ':ClangdSwitchSourceHeader<cr>', { desc = 'Switch source/header' })
-              end
-            })
-          end,
-          vimls = function()
-            require('lspconfig').vimls.setup({})
-          end,
-          lua_ls = function()
-            require('lspconfig').lua_ls.setup({
-              settings = {
-                Lua = {
-                  telemetry = {
-                    enable = false
-                  },
-                  format = {
-                    enable = true,
-                    defaultConfig = {
-                      indent_style = "space",
-                      indent_size = "2"
-                    }
-                  }
-                },
-              },
-              on_attach = function(client, bufnr)
-                --config.on_attach(client, bufnr)
-                client.server_capabilities.documentFormattingProvider = true
-                client.server_capabilities.documentRangeFormattingProvider = true
-              end,
-              on_init = function(client)
-                local join = vim.fs.joinpath
-                local path = client.workspace_folders[1].name
-
-                -- Don't do anything if there is project local config
-                if vim.uv.fs_stat(join(path, '.luarc.json'))
-                    or vim.uv.fs_stat(join(path, '.luarc.jsonc'))
-                then
-                  return
-                end
-
-                -- Apply neovim specific settings
-                local runtime_path = vim.split(package.path, ';')
-                table.insert(runtime_path, join('lua', '?.lua'))
-                table.insert(runtime_path, join('lua', '?', 'init.lua'))
-
-                local nvim_settings = {
-                  runtime = {
-                    -- Tell the language server which version of Lua you're using
-                    version = 'LuaJIT',
-                    path = runtime_path
-                  },
-                  diagnostics = {
-                    -- Get the language server to recognize the `vim` global
-                    globals = { 'vim' }
-                  },
-                  workspace = {
-                    checkThirdParty = false,
-                    library = {
-                      -- Make the server aware of Neovim runtime files
-                      vim.env.VIMRUNTIME,
-                      vim.fn.stdpath('config'),
-                    },
-                  },
-                }
-
-                client.config.settings.Lua = vim.tbl_deep_extend(
-                  'force',
-                  client.config.settings.Lua,
-                  nvim_settings
-                )
-              end,
-            })
-          end,
-          zls = function()
-            -- zls json schema: https://github.com/zigtools/zls/blob/master/schema.json
-            vim.g.zig_fmt_autosave = 0
-
-            require('lspconfig').zls.setup({
-              cmd = { 'zls' },
-              filetypes = { 'zig', 'zir' },
-              root_markers = { 'zls.json', 'build.zig', '.git' },
-              workspace_required = false,
-              settings = {
-                zls = {
-                  enable_autofix = true,
-                }
-              }
-            })
-          end,
-          ansiblels = function()
-            require('lspconfig').ansiblels.setup({
-              cmd = { "ansible-language-server", "--stdio" },
-              filetypes = { 'yaml.ansible' },
-              root_markers = { "ansible.cfg", ".ansible-lint" },
-              settings = {
-                ansible = {
-                  ansible = {
-                    path = "ansible"
-                  },
-                  executionEnvironment = {
-                    enabled = false
-                  },
-                  python = {
-                    interpreterPath = "python"
-                  },
-                  validation = {
-                    enabled = true,
-                    lint = {
-                      enabled = true,
-                      path = "ansible-lint"
-                    }
-                  }
-                }
-              }
-            })
-          end,
-          bashls = function()
-            require('lspconfig').bashls.setup({
-              cmd = { 'bash-language-server', 'start' },
-              filetypes = { 'bash', 'sh' }
-            })
-          end
-        }
       })
     end
   }

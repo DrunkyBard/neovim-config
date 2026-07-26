@@ -1,6 +1,7 @@
 local plugin = {
   'nvim-telescope/telescope.nvim',
-  tag = '0.1.8',
+  -- branch = 'master',
+  version = '*',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-telescope/telescope-dap.nvim',
@@ -112,6 +113,9 @@ plugin.config = function(buf, opts)
             preview_width = 0.6,
           },
       },
+      -- preview = {
+      --   treesitter = false,
+      -- },
     },
     pickers = {
       find_files = {

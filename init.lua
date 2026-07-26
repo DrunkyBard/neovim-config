@@ -43,6 +43,10 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   callback = set_hl_for_floating_window,
 })
 
+vim.api.nvim_create_user_command("LspInfo", function()
+  vim.cmd("checkhealth vim.lsp")
+end, { force = true })
+
 return {
   {
     'nvim-telescope/telescope.nvim',
